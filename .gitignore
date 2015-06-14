@@ -14,3 +14,7 @@
 
 # Ignore username & password
 config/database.yml
+
+# Ignore editor project/workspace
+*.sublime-project
+*.sublime-workspace
