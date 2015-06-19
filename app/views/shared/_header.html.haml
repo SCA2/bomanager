@@ -1,0 +1,24 @@
+%section#top-header.row
+  %h1.col-md-2
+    - if signed_in?
+      = link_to "BOManager", home_path
+    - else
+      = link_to "BOManager", root_path
+  - if signed_in?
+    %ul.col-md-4.clearfix
+      %li= link_to "Components", components_path
+      %li= link_to "My BOMs"
+      / %li= link_to "People"
+    / = form_tag(search_videos_path, method: "get", class: "col-md-5 navbar-form search-query") do
+    /   .form-group
+    /     = text_field_tag("query", params[:query], type: :text, placeholder: "Part search", class: "form-control")
+    /     = submit_tag "Search", name: nil, class: 'btn btn-default'
+    #user_links.pull-right
+      %ul
+        %li= link_to "Welcome, #{current_user.name}", users_path(current_user)
+        %li= link_to "Sign out", sign_out_path
+  - else
+    #user_links.pull-right
+      %ul
+        %li= link_to "Sign up", sign_up_path
+        %li= link_to "Sign in", sign_in_path
