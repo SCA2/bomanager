@@ -1,0 +1,41 @@
+%article.component
+  .container
+    .row
+      .video_large_cover.col-sm-7.col-sm-offset-1
+        =image_tag @component.large_cover_url
+      .video_info.col-sm-3
+        %header
+          %h3= @component.title
+          %span Rating: 4.5/5.0
+        %p= @component.description
+        .actions
+          %a.btn.btn-primary(href="") Watch Now
+          =link_to "+ My Queue", queue_items_path(queue_item: { user_id: @current_user, video_id: @component }), method: :post, class: "btn btn-default" unless @current_user.in_queue?(@component)
+
+/ %section.reviews.container
+/   .row
+/     .col-sm-10.col-sm-offset-1
+/       =bootstrap_form_for [@component, Review.new] do |f|
+/         %fieldset
+/           .form-group
+/             .row
+/               .col-sm-3
+/                 =f.select :rating, review_options(f.object.rating), label: 'Rate this component', class: "form-control"
+/           .form-group
+/             .row
+/               .col-sm-8
+/                 =f.text_area :body, { label: 'Write Review', rows: 6 }
+/         %fieldset.form-group.actions.clearfix
+/         %input(type="submit" value="Submit" class="btn btn-default")
+/           =link_to "Cancel", @component
+/       %header
+/         %h3 User Reviews (#{@reviews.count})
+/       %ul
+/         - @reviews.each do |review|
+/           %article.review
+/             %li.row
+/               .col-sm-2
+/                 %span Rating: #{ review.rating } / 5
+/                 %p by #{ review.user.name }
+/               .col-sm-8
+/                 %p #{ review.body }

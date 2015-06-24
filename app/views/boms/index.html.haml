@@ -1,0 +1,30 @@
+%section.bom.container
+  .row
+    .col-sm-10.col-sm-offset-1
+      %article
+        %header
+          %h3 BOMs
+      =form_tag(boms_path(@boms)) do
+        %article.form-group
+          %table.table-striped.table-bordered#bom
+            %thead
+              %tr
+                %th(width="20%") Name
+                %th(width="10%") Revision
+                %th(width="10%") Total Parts
+                %th(width="20%") Last Ordered
+                %th(width="10%") Days to Reorder
+                %th(width="10%") Price
+                %th(width="10%") Buy
+                %th(width="10%") Delete
+            %tbody
+              -@boms.each_with_index do |bom, index|
+                %tr
+                  %td= link_to bom.name, bom
+                  %td= bom.revision
+                  %td= bom.total_parts
+                  %td= bom.last_ordered
+                  %td= bom.days_to_reorder
+                  %td= bom.price
+                  %td= link_to "Buy", bom, method: :buy
+                  %td= link_to "", bom, method: :delete, class: "glyphicon glyphicon-remove"
