@@ -11,10 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150618204356) do
+ActiveRecord::Schema.define(version: 20150620055147) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "bom_items", force: :cascade do |t|
+    t.integer  "quantity"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "bom_id"
+    t.integer  "component_id"
+  end
+
+  add_index "bom_items", ["bom_id"], name: "index_bom_items_on_bom_id", using: :btree
+  add_index "bom_items", ["component_id"], name: "index_bom_items_on_component_id", using: :btree
 
   create_table "boms", force: :cascade do |t|
     t.datetime "created_at"
@@ -41,13 +52,13 @@ ActiveRecord::Schema.define(version: 20150618204356) do
 
   add_index "components", ["category_id"], name: "index_components_on_category_id", using: :btree
 
-  create_table "traits", force: :cascade do |t|
+  create_table "properties", force: :cascade do |t|
     t.string  "name"
     t.string  "value"
     t.integer "component_id"
   end
 
-  add_index "traits", ["component_id"], name: "index_traits_on_component_id", using: :btree
+  add_index "properties", ["component_id"], name: "index_properties_on_component_id", using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "name"

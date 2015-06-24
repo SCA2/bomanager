@@ -1,9 +1,26 @@
-- @categories.each do |category|
-  %article.component_category
-    %header
-      %h3= link_to category.name, category
-    .components.row
-      - category.components.each do |component|
-        .component.col-sm-2
-          = link_to component.name, component
-          /   = image_tag component.small_cover_url
+.container.col-sm-10.col-sm-offset-1
+  =form_tag(boms_path) do
+    %article.form-group
+      %table.table-striped.table-bordered#components
+        %thead
+        %tr
+          %th.col-sm-1 Select
+          %th.col-sm-1 Category
+          %th.col-sm-1 Mfr Part Num
+          %th.col-sm-1 Manufacturer
+          %th.col-sm-6 Description
+        %tbody
+          -@categories.each do |category|
+            -category.components.each do |component|
+              %tr
+                %td= check_box_tag 'bom[bom_items_attributes][][component_id]', component.id
+                %td= link_to category.name, category
+                %td= link_to component.name, component
+                %td= component.manufacturer
+                %td= component.description
+    %article.form-group.form-inline
+      =submit_tag "Add selected to BOM", class: "btn btn-default"
+      =select_tag "bom[id]", bom_options, class: "btn btn-default"
+      %div.pull-right
+        =label_tag "bom[name]", 'BOM Name'
+        =text_field_tag "bom[name]", 'New BOM', class: "form-control"

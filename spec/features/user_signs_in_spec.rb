@@ -2,12 +2,6 @@ require 'rails_helper'
 
 feature 'user signs in' do
 
-  before do
-    category = Fabricate(:category)
-    category.components << Fabricate(:component)
-    category.components.first.traits << Fabricate(:trait)
-  end
-  
   scenario 'with existing username and password' do
     user = Fabricate(:user)
     sign_in_user(user)

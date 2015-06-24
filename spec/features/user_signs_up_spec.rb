@@ -9,7 +9,6 @@ feature 'user signs up' do
     fill_in "Email Address", with: "#{user[:email]}"
     fill_in "Password", with: "#{user[:password]}"
     click_button "Sign Up"
-    # save_and_open_page
     expect(page.current_path).to eq "/home"
     expect(page).to have_content "#{user[:name]}"
     expect(page).to have_content "Sign out"
