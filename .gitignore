@@ -19,5 +19,8 @@ config/database.yml
 *.sublime-project
 *.sublime-workspace
 
-# Ignor guardfile
+# Ignore guardfile
 Guardfile
+
+# Ignore SimpleCov output
+/coverage/

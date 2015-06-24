@@ -11,6 +11,7 @@ class BomsController < ApplicationController
     else
       bom = Bom.new(bom_params)
     end
+
     if bom.update(bom_params)
       flash[:success] = "BOM updated!"
       redirect_to bom
