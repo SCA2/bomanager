@@ -1,9 +1,11 @@
 class Bom < ActiveRecord::Base
   belongs_to :user
   has_many :bom_items, inverse_of: :bom
-  validates :name, presence: true
+  
   accepts_nested_attributes_for :bom_items
 
+  validates :name, presence: true
+  
   def revision
     1.0
   end
@@ -20,7 +22,7 @@ class Bom < ActiveRecord::Base
     1
   end
   
-  def price
+  def total
     bom_items.reduce(0) { |sum, item| sum + item.total }
   end
 
