@@ -10,6 +10,6 @@ Rails.application.routes.draw do
   resources :categories, only: [:index, :show]
   resources :components, only: [:index, :show]
   resources :boms, only: [:index, :create, :show]
-  resources :bom_items
+  resources :bom_items, only: [:destroy]
 
 end

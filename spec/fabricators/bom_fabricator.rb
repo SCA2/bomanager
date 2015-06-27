@@ -1,4 +1,4 @@
 Fabricator(:bom) do
   user
-  name { Faker::Name.name }
+  name { Faker::Name.last_name }
 end

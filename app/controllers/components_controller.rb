@@ -8,7 +8,6 @@ class ComponentsController < ApplicationController
 
   def show
     @component = Component.find(params[:id])
-    @properties = @component.properties
   end
 
 end
