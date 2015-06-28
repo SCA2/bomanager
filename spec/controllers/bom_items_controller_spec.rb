@@ -31,12 +31,11 @@ describe BomItemsController do
         expect {
           delete :destroy, id: item_3
         }.to change(BomItem, :count).by(0)
-        expect(response).to redirect_to sign_in_path
       end
 
       it 'redirects to bom page' do
         delete :destroy, id: item_1
-        expect(response).to redirect_to bom_path(bom)
+        expect(response).to redirect_to bom_path(bom_1)
       end
 
     end
