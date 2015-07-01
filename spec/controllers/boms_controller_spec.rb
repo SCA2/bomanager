@@ -51,6 +51,59 @@ describe BomsController do
         post :create, id: 0, bom: bom_1.merge!(bom_items_attributes: [item_1])
         expect(response).to redirect_to Bom.last
       end
+  
+    # describe 'POST create' do
+
+    #   let!(:part_1) { Fabricate(:component, name: 'part_z') }
+    #   let!(:part_2) { Fabricate(:component, name: 'part_a') }
+    #   let!(:item_1) { Fabricate.attributes_for(:bom_item, quantity: 1, component: part_1) }
+    #   let!(:item_2) { Fabricate.attributes_for(:bom_item, quantity: 1, component: part_2) }
+    #   let!(:bom_1)  { Fabricate(:bom) }
+    #   let!(:bom_2)  { Fabricate(:bom) }
+
+    #   it 'creates a new bom_item' do
+    #     expect {
+    #       post :create, id: bom_1.id, bom_item: item_1
+    #     }.to change(BomItem, :count).by 1
+    #   end
+
+    #   it 'associates new bom_item with bom' do
+    #     expect {
+    #       post :create, id: bom_1.id, bom_item: item_1
+    #     }.to change(bom_1.bom_items, :count).by 1
+    #   end
+
+    #   it 'associates bom_item with component' do
+    #     post :create, id: bom_1.id, bom_item: item_1
+    #     expect(bom_1.bom_items.last.component).to eq part_1
+    #   end
+
+    #   it 'orders by component name' do
+    #     post :create, id: bom_1.id, bom_item: item_1
+    #     post :create, id: bom_1.id, bom_item: item_2
+    #     expect(bom_1.bom_items.last.component_name).to eq part_1.name
+    #   end
+
+    #   it 'does not add same component twice' do
+    #     expect {
+    #       post :create, id: bom_1.id, bom_item: item_1
+    #       post :create, id: bom_1.id, bom_item: item_1
+    #     }.to change(bom_1.bom_items, :count).by 1
+    #   end
+
+    #   it 'adds same component to different boms' do
+    #     post :create, id: bom_1.id, bom_item: item_1
+    #     post :create, id: bom_2.id, bom_item: item_1
+    #     expect(bom_1.bom_items.count).to eq 1
+    #     expect(bom_2.bom_items.count).to eq 1
+    #   end
+
+    #   it 'redirects to boms index page' do
+    #     post :create, id: bom_1.id, bom_item: item_1
+    #     expect(response).to redirect_to bom_1
+    #   end
+    # end
+
     end
 
     describe 'DELETE destroy' do
@@ -66,7 +119,6 @@ describe BomsController do
 
       let!(:item_1) { Fabricate(:bom_item, component: part_1) } 
       let!(:item_2) { Fabricate(:bom_item, component: part_2) }
-      let!(:item_3) { Fabricate(:bom_item, component: part_2) }
 
       it 'deletes a bom' do
         expect {
@@ -74,7 +126,7 @@ describe BomsController do
         }.to change(Bom, :count).by(-1)
       end
 
-      it 'deletes only the correct bom' do
+      it 'deletes only current users boms' do
         expect {
           delete :destroy, id: bom_2
         }.to change(Bom, :count).by(0)

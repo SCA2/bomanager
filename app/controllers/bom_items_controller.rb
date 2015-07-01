@@ -7,16 +7,6 @@ class BomItemsController < ApplicationController
     @bom_items = @bom.bom_items
   end
 
-  def create
-    bom_item = BomItem.new(bom_item_params)
-    if bom_item.save
-      flash[:notice] = "Component added to bom!"
-    else
-      flash[:alert] = "Can't add that component to bom!"
-    end
-    redirect_to @bom
-  end
-
   def update_bom
     begin
       ActiveRecord::Base.transaction do

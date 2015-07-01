@@ -6,20 +6,15 @@ class BomsController < ApplicationController
     @boms = current_user.boms
   end
 
-  def show
-    redirect_to bom_items_path(id: params[:id])
-  end
-
   def create
-    # binding.pry
     @bom = Bom.where(id: bom_params[:id]).first_or_create
     begin
       ActiveRecord::Base.transaction do
         @bom.update!(bom_params)
         create_items(items_params)
-        flash[:success] = "BOM updated!"
-        redirect_to @bom
       end
+      flash[:success] = "BOM updated!"
+      redirect_to @bom
     rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound
       flash[:alert] = "Can't update BOM!"
       redirect_to components_path
@@ -39,10 +34,6 @@ class BomsController < ApplicationController
 
   private
 
-  def permit_item(param)
-    param.permit(:component_id, :quantity, :reference)
-  end
-
   def bom_params
     params.require(:bom).permit(:name, :id).merge!(user_id: current_user.id)
   end
@@ -53,16 +44,23 @@ class BomsController < ApplicationController
 
   def create_items(params)
     params.each do |param|
-      if param[:component_id]
-        item = @bom.bom_items.find_by(component_id: param[:component_id])
-        if item
-          item.quantity += param[:quantity].to_i
-        else
-          item = @bom.bom_items.create(permit_item(param))
-        end
-        item.save!
-      end
+      create_or_update_item(param)
     end
+  end
+
+  def create_or_update_item(param)
+    return unless param[:component_id]
+    item = @bom.bom_items.find_by(component_id: param[:component_id])
+    if item
+      item.quantity += param[:quantity].to_i
+    else
+      item = @bom.bom_items.create(permit_item(param))
+    end
+    item.save!
+  end
+
+  def permit_item(param)
+    param.permit(:component_id, :quantity, :reference)
   end
 
 end

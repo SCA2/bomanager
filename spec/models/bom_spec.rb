@@ -7,7 +7,10 @@ describe Bom do
   it { should have_many(:bom_items) }
 
   let(:bom)       { Fabricate(:bom) }
-  let(:component) { Fabricate(:component) }
+  let(:category)  { Fabricate(:category) }
+  let(:part_1)    { category.components[0] }
+  let(:part_2)    { category.components[1] }
+  let(:part_3)    { category.components[2] }
 
   describe '#revision' do
     it 'returns revision number of BOM' do
@@ -17,9 +20,9 @@ describe Bom do
 
   describe '#total_parts' do
     it 'returns sum of component quantities' do
-      Fabricate(:bom_item, bom: bom, component: component, quantity: 1)
-      Fabricate(:bom_item, bom: bom, component: component, quantity: 2)
-      Fabricate(:bom_item, bom: bom, component: component, quantity: 3)
+      Fabricate(:bom_item, bom: bom, component: part_1, quantity: 1)
+      Fabricate(:bom_item, bom: bom, component: part_2, quantity: 2)
+      Fabricate(:bom_item, bom: bom, component: part_3, quantity: 3)
       expect(bom.total_parts).to eq 6
     end
   end
