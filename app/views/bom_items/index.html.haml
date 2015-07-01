@@ -4,7 +4,7 @@
       %article
         %header
           %h3= @bom.name
-      =form_tag(bom_item_path, bom_id: @bom.id) do
+      =form_tag({ controller: :bom_items, action: :update_bom, id: @bom.id }) do
         %article.form-group
           %table.table-striped.table-bordered#bom
             %thead
@@ -21,7 +21,7 @@
             %tbody
               -@bom_items.each_with_index do |item, index|
                 %tr
-                  %td= index
+                  %td= index + 1
                   %td= link_to item.category_name, item.category
                   %td= text_field_tag "bom_items[][quantity]", item.quantity, class: "form-control"
                   %td= text_field_tag "bom_items[][reference]", item.reference, class: "form-control"

@@ -3,12 +3,16 @@ class BomItem < ActiveRecord::Base
   belongs_to :bom
   belongs_to :component
 
+  scope :sort, -> { joins(:component).order('components.name') }
+
   validates :quantity, numericality: { only_integer: true }
   validates :quantity, numericality: { greater_than: 0 }
+  validates :component, presence: true
+  validates :component, uniqueness: { scope: :bom }
 
-  def reference
-    "C1, C2, C3"
-  end
+  # delegate :category, to: :component
+  # delegate :name, to: :component, prefix: :component
+
 
   def component_name
     component.name

@@ -7,19 +7,21 @@
         %header
           %h3= @component.name
         %p= @component.description
-        %article.form-group
-          %table.table-striped.table-bordered#bom
-            %thead
-              %tr
-                %th(width="20%") Name
-                %th(width="10%") Revision
-                %th(width="10%") Total Parts
-                %th(width="10%") Price
-            %tbody
-              -@component.bom_items.each_with_index do |bom_item, index|
-                -bom = bom_item.bom
+        -if @bom_items
+          %article.form-group
+            %table.table-striped.table-bordered#bom
+              %thead
                 %tr
-                  %td= link_to bom.name, bom
-                  %td= bom.revision
-                  %td= bom.total_parts
-                  %td= bom.total
+                  %th(width="20%") Name
+                  %th(width="10%") Revision
+                  %th(width="10%") Total Parts
+                  %th(width="10%") Price
+                %tbody
+                  -@bom_items.each_with_index do |bom_item, index|
+                    -bom = bom_item.bom
+                    -if bom
+                      %tr
+                        %td= link_to bom.name, bom
+                        %td= bom.revision
+                        %td= bom.total_parts
+                        %td= bom.total

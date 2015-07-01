@@ -1,9 +1,12 @@
 class Bom < ActiveRecord::Base
-  belongs_to :user
-  has_many :bom_items, inverse_of: :bom
   
-  accepts_nested_attributes_for :bom_items
-
+  belongs_to :user
+  has_many  :bom_items,
+            -> { joins(:component).order('components.name') },
+            inverse_of: :bom,
+            dependent: :destroy
+            
+  
   validates :name, presence: true
   
   def revision
@@ -24,6 +27,10 @@ class Bom < ActiveRecord::Base
   
   def total
     bom_items.reduce(0) { |sum, item| sum + item.total }
+  end
+
+  def in_bom?(component)
+    bom_items.any? { |i| i.component == component }
   end
 
 end

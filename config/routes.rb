@@ -5,11 +5,12 @@ Rails.application.routes.draw do
   post  '/sign_in',   to: 'sessions#create'
   get   '/sign_out',  to: 'sessions#destroy'
   get   '/sign_up',   to: 'users#new'
+  post  '/bom_items/:id',  to: 'bom_items#update_bom'
 
   resources :users, only: [:new, :create]
   resources :categories, only: [:index, :show]
   resources :components, only: [:index, :show]
-  resources :boms, only: [:index, :create, :show]
-  resources :bom_items, only: [:destroy]
+  resources :boms, only: [:index, :create, :show, :destroy]
+  resources :bom_items, only: [:index, :create, :destroy]
 
 end

@@ -14,6 +14,7 @@
             -category.components.each do |component|
               %tr
                 %td= check_box_tag 'bom[bom_items_attributes][][component_id]', component.id
+                =hidden_field_tag 'bom[bom_items_attributes][][quantity]', 1
                 %td= link_to category.name, category
                 %td= link_to component.name, component
                 %td= component.manufacturer

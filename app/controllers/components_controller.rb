@@ -8,6 +8,7 @@ class ComponentsController < ApplicationController
 
   def show
     @component = Component.find(params[:id])
+    @bom_items = @component.bom_items
   end
 
 end
