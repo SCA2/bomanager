@@ -4,7 +4,7 @@
       %article
         %header
           %h3= @bom.name
-      =form_tag({ controller: :bom_items, action: :update_bom, id: @bom.id }) do
+      =form_tag(@bom) do
         %article.form-group
           %table.table-striped.table-bordered#bom
             %thead

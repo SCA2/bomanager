@@ -6,9 +6,11 @@ describe BomItemsController do
 
     before      { set_current_user }
     let(:user)  { controller.current_user }
-    let!(:bom)   { Fabricate(:bom) }
 
     describe 'GET index' do
+
+      let!(:bom)  { Fabricate(:bom) }
+
       it 'sets @bom_items to selected bom items' do
         bom.bom_items << Fabricate(:bom_item)
         bom.bom_items << Fabricate(:bom_item)
@@ -57,7 +59,7 @@ describe BomItemsController do
           expect(flash[:error]).to be_present
         end
 
-        it 'does not change existing queue items' do
+        it 'does not change existing bom items' do
           bom_1.bom_items << persist_2
           post :update_bom, id: bom_1.id, bom_items: [item_2]
           expect(persist_2.reload.quantity).to eq 2
@@ -65,7 +67,7 @@ describe BomItemsController do
       end
 
       context 'with other boms data' do
-        it 'does not change existing queue items' do
+        it 'does not change existing bom items' do
           bom_1.bom_items << persist_1
           bom_2.bom_items << persist_2
           post :update_bom, id: bom_2.id, bom_items: [item_1]

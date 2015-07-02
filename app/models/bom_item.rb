@@ -10,28 +10,13 @@ class BomItem < ActiveRecord::Base
   validates :component, presence: true
   validates :component, uniqueness: { scope: :bom }
 
-  # delegate :category, to: :component
-  # delegate :name, to: :component, prefix: :component
-
-
-  def component_name
-    component.name
-  end
-
-  def category
-    component.category
-  end
+  delegate :category,     to: :component
+  delegate :manufacturer, to: :component
+  delegate :price,        to: :component
+  delegate :name,         to: :component, prefix: :component
 
   def category_name
     component.category.name
-  end
-
-  def manufacturer
-    component.manufacturer
-  end
-
-  def price
-    component.price
   end
 
   def total

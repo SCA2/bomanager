@@ -49,7 +49,7 @@ feature 'component library' do
       within_table('components') do
         first("input[type='checkbox']").set(true)
       end
-      select('Create new', from: 'bom[id]')
+      select('New BOM', from: 'bom[id]')
       click_button('Add selected to BOM')
       expect(page.current_path).to eq bom_path(Bom.last)
       expect(page.find('.alert-success')).to be_present
@@ -61,7 +61,7 @@ feature 'component library' do
       within_table('components') do
         first("input[type='checkbox']").set(true)
       end
-      select('Create new', from: 'bom[id]')
+      select('New BOM', from: 'bom[id]')
       click_button('Add selected to BOM')
       visit(components_path)
       within_table('components') do

@@ -6,8 +6,8 @@ Rails.application.routes.draw do
   get   '/sign_out',  to: 'sessions#destroy'
   get   '/sign_up',   to: 'users#new'
   
-  get   '/boms/:id',      to: 'bom_items#index'
-  post  '/bom_items/:id', to: 'bom_items#update_bom'
+  get   '/boms/:id',  to: 'bom_items#index'
+  post  '/boms/:id',  to: 'bom_items#update_bom'
 
   resources :users, only: [:new, :create]
   resources :categories, only: [:index, :show]

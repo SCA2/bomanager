@@ -4,19 +4,24 @@ class BomsController < ApplicationController
 
   def index
     @boms = current_user.boms
+    if @boms.count == 0
+      flash[:notice] = "You don't have any BOMs"
+      redirect_to home_path
+    end
   end
 
   def create
     @bom = Bom.where(id: bom_params[:id]).first_or_create
+    # binding.pry
     begin
       ActiveRecord::Base.transaction do
         @bom.update!(bom_params)
-        create_items(items_params)
+        create_or_update_items(items_params)
       end
-      flash[:success] = "BOM updated!"
+      flash[:success] = "BOM created!"
       redirect_to @bom
     rescue ActiveRecord::RecordInvalid, ActiveRecord::RecordNotFound
-      flash[:alert] = "Can't update BOM!"
+      flash[:alert] = "Can't create BOM!"
       redirect_to components_path
     end
   end
@@ -42,7 +47,7 @@ class BomsController < ApplicationController
     params.require(:bom).require(:bom_items_attributes)
   end
 
-  def create_items(params)
+  def create_or_update_items(params)
     params.each do |param|
       create_or_update_item(param)
     end
