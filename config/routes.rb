@@ -9,8 +9,10 @@ Rails.application.routes.draw do
   get   '/boms/:id',  to: 'bom_items#index'
   post  '/boms/:id',  to: 'bom_items#update_bom'
 
+  get   '/categories/:id',  to: 'components#sub_index'
+
   resources :users, only: [:new, :create]
-  resources :categories, only: [:index, :show]
+  resources :categories, only: [:show]
   resources :components, only: [:index, :show]
   resources :boms, only: [:index, :create, :destroy]
   resources :bom_items, only: [:index, :destroy]

@@ -12,7 +12,6 @@ class BomsController < ApplicationController
 
   def create
     @bom = Bom.where(id: bom_params[:id]).first_or_create
-    # binding.pry
     begin
       ActiveRecord::Base.transaction do
         @bom.update!(bom_params)

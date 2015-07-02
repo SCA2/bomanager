@@ -32,6 +32,15 @@ feature 'component library' do
       expect(page.find('h3', text: component.name)).to be_present
     end
 
+    scenario 'view all components in a category' do
+      sign_in_user
+      visit components_path
+      within_table('components') do
+        click_link(category.name, match: :first)
+      end
+      expect(page.current_path).to eq category_path(category)
+    end
+
     scenario 'component view lists BOMs' do
       sign_in_user
       bom = Fabricate(:bom)
