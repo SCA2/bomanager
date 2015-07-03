@@ -21,7 +21,7 @@ class BomItemsController < ApplicationController
   def destroy
     bom_item = BomItem.find(params[:id])
     if current_user.boms.include?(bom_item.bom)
-      bom_item.destroy
+      BomItem.destroy(bom_item.id)
       flash[:success] = "Item deleted!"
     else
       flash[:alert] = "Can't delete that item!"
