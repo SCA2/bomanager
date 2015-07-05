@@ -3,13 +3,18 @@ ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
+
 require 'simplecov'
 SimpleCov.start 'rails'
+
 require 'spec_helper'
 require 'rspec/rails'
 
 # Add additional requires below this line. Rails is not loaded until this point!
 require 'capybara/rails'
+require 'webmock/rspec'
+
+WebMock.disable_net_connect!(allow_localhost: true)
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -53,4 +58,11 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
+
+  config.before(:each) do
+    stub_request(:get, %r{\Ahttp://octopart.com/api/v3/parts/search.*\z}).
+            with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Host'=>'octopart.com', 'User-Agent'=>'Ruby'}).
+            to_return(status: 200, body: octopart_json, headers: {})
+  end
+  
 end

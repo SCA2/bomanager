@@ -34,6 +34,7 @@ group :test do
   gem 'capybara'
   gem 'launchy'
   gem 'simplecov', require: false
+  gem 'webmock', '~> 1.21.0'
 end
 
 group :production do

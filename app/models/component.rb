@@ -7,6 +7,7 @@ class Component < ActiveRecord::Base
   has_many    :bom_items
 
   validates :name, :manufacturer, :description, presence: :true
+  validates :price, :distributor, :last_priced, presence: :true
 
   scope :sorted, -> { order(:name) }
 
@@ -15,11 +16,11 @@ class Component < ActiveRecord::Base
     where("name ILIKE ?", "%#{query}%").all.sorted
   end
 
-  def price
+  def octopart_price
 
     url = "http://octopart.com/api/v3/parts/search?apikey="
     url += ENV["OCTOPART_API_KEY"]
-    
+
     def to_query(hsh)
       hsh.map {|k, v| "#{k}=#{URI.encode(v.to_s)}"}.join("&")
     end

@@ -7,6 +7,9 @@ describe Component do
   it { should validate_presence_of(:name) }
   it { should validate_presence_of(:manufacturer) }
   it { should validate_presence_of(:description) }
+  it { should validate_presence_of(:price) }
+  it { should validate_presence_of(:last_priced) }
+  it { should validate_presence_of(:distributor) }
 
   it "retrieves Components in name order" do
     c = Fabricate(:component, name: 'name c', description: 'Description c')
@@ -53,4 +56,20 @@ describe Component do
       expect(Component.search_by_name('')).to eq []
     end
   end
+
+  describe "octopart_price" do
+    it 'queries Octopart API for component price' do
+      component = Fabricate(:component, name: '271-10K-RC')
+      expect(component.octopart_price).to eq 29.6000
+    end
+  end
+
+  describe "mouser_price"
+  describe "digikey_price"
+
+  describe "current_price" do
+    it 'returns price less than 2 days old' do
+    end
+  end
+
 end
