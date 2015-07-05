@@ -1,28 +1,14 @@
 == README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is my Tealeaf Academy TDD practice project.  It's the start of a part inventory and purchasing tool called BOManager, currently hosted on heroku here: https://young-oasis-6175.herokuapp.com
 
-Things you may want to cover:
+Users add parts from the library to any number of Bills Of Material (BOMs).  The application uses the Octopart API to get current pricing from a number of distributors.  The idea is to maintain prices that are no more than two days old, and to choose the lowest price from the stocking distributors.
 
-* Ruby version
+To Do:
 
-* System dependencies
+* CSV Import for both library components and BOMs
 
-* Configuration
+* Admin functions
 
-* Database creation
+* Real-time inventory integration with web store
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-
-
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
