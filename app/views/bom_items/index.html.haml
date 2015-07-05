@@ -14,7 +14,8 @@
                 %th(width="5%") Quantity
                 %th(width="15%") Reference
                 %th(width="20%") Mfr Part Number
-                %th(width="20%") Manufacturer
+                %th(width="10%") Manufacturer
+                %th(width="10%") Distributor
                 %th(width="10%") Price
                 %th(width="10%") Total
                 %th(width="5%") Remove
@@ -28,8 +29,9 @@
                   %td= link_to item.component_name, item.component
                   =hidden_field_tag "bom_items[][component_id]", item.component.id
                   %td= item.manufacturer
-                  %td= item.price
-                  %td= item.total
+                  %td= item.current_distributor
+                  %td= number_to_currency(item.current_price, unit: '', precision: 3)
+                  %td= number_to_currency(item.total, unit: '', precision: 2)
                   %td= link_to "", item, method: :delete, class: "glyphicon glyphicon-remove"
         %article.form-group
           =submit_tag "Update BOM", class: "btn btn-default"

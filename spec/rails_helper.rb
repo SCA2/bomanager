@@ -60,7 +60,7 @@ RSpec.configure do |config|
   config.infer_spec_type_from_file_location!
 
   config.before(:each) do
-    stub_request(:get, %r{\Ahttp://octopart.com/api/v3/parts/search.*\z}).
+    stub_request(:get, %r{\Ahttp://octopart.com/api/v3/parts/match.*\z}).
             with(headers: {'Accept'=>'*/*', 'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3', 'Host'=>'octopart.com', 'User-Agent'=>'Ruby'}).
             to_return(status: 200, body: octopart_json, headers: {})
   end

@@ -7,8 +7,19 @@
         %header
           %h3= @component.name
         %p= @component.description
+        %table.component
+          %tr
+            %th Manufacturer
+            %td= @component.manufacturer
+          %tr
+            %th Distributor
+            %td= @component.current_distributor
+          %tr
+            %th Price
+            %td= @component.current_price
         -if @bom_items.count > 0
           %article.form-group
+            %h4 Used in BOMs
             %table.table-striped.table-bordered#bom
               %thead
                 %tr

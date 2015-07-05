@@ -28,9 +28,15 @@ describe BomItem do
     end
   end
 
-  describe '#price' do
+  describe '#current_price' do
     it 'returns component price' do
-      expect(bom_item.price).to eq component.price
+      expect(bom_item.current_price).to eq component.current_price
+    end
+  end
+
+  describe '#current_distributor' do
+    it 'returns component distributor' do
+      expect(bom_item.current_distributor).to eq component.current_distributor
     end
   end
 
