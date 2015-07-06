@@ -17,30 +17,28 @@ class Component < ActiveRecord::Base
   end
 
   def current_price
-    if last_priced && last_priced > 2.days.ago
-      price
-    else
+    if !last_priced || last_priced < 2.days.ago
       octopart_query
-      update( price: octopart_price,
-              last_priced: DateTime.now,
-              distributor: octopart_distributor )
-      price
+      octopart_update
     end
+    price
   end
 
   def current_distributor
-    if last_priced && last_priced > 2.days.ago
-      distributor
-    else
+    if !last_priced || last_priced < 2.days.ago
       octopart_query
-      update( price: octopart_price,
-              last_priced: DateTime.now,
-              distributor: octopart_distributor )
-      distributor
+      octopart_update
     end
+    distributor
   end
 
   private
+
+  def octopart_update
+    update( price: octopart_price,
+            last_priced: DateTime.now,
+            distributor: octopart_distributor )
+  end
   
   def octopart_query
     url = "http://octopart.com/api/v3/parts/match?apikey="
